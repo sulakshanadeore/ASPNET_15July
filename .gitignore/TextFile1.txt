@@ -1,0 +1,43 @@
+﻿State Management
+-----------------
+
+Web applications----- http/https
+Both these protocols are stateless protocols.
+ie. donot remember anything about the previous request, 
+unless u explicitly do some steps/techniques.
+These steps to make the page/application remember the state(data)
+of the control/page/app is called state management.
+
+Techniques:
+1) Client--- ViewState,cookies,QueryStrings,hidden fields
+2) Server----- Sesion,Application,Profiles
+
+Client Side
+------------
+
+1) ViewState--- 
+to make remember the data for a same page.
+uses Dictionary 
+--------------------------------
+to Carry data from one page to another page we use cookies or query string.
+
+2) Cookies---  text files that store the data on the browser.
+single value/multi valued
+single valued cookie
+multivalued cookie
+
+a cookie is persisted till it doesn't expire.
+
+Advantage---- data can be transferred easily from one page to another page
+disadvantage----- risky
+           ---------size limitation to the cookie.
+every browser has a cookie limit.
+max number of cookies 
+180 cookies----max size 4096 bytes
+
+localStorage---- can be used
+
+3) Query String---- with ?(question mark)
+disadvantage-- risky and size of 2048 characters limit
+
+4) hidden string
