@@ -14,12 +14,17 @@ namespace ServerSideStateMgtDemo
             Response.Write("Session ID=  " + Session.SessionID);
             Response.Write("<br/>");
             Response.Write("Is a New Session= " + Session.IsNewSession);
-            Session["mydata"] = "Hello";
+           
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Write(Session["mydata"].ToString());
+            Session["Prodid"] = Convert.ToInt32(txtprodid.Text);
+            Session["pname"] = txtprodname.Text;
+        }
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/ShowProducts.aspx");
         }
     }
 }
