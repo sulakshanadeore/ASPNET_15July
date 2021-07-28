@@ -1,0 +1,100 @@
+Server Side State Mgt
+---------------------
+ViewState,Cookies,QueryString & Hidden Field.
+Each of them have their own limitation.
+
+
+1)
+Disabled in the client side computer on the browser on which we are using the app. the cookie will not be created.risk factor
+2)
+Query String size limitation so cannot transfer. risk factor.
+3)
+Hidden Field the data is seen if u right click on the page--- View Source
+So not safe.
+4)
+Only same page data so cannot be used for transferring data between pages.
+-------------------------------------------------------------------------
+Why Server Side State Mgt?
+-------------------------
+It is better to keep the data on the server instead of the client when 
+security is concerned.
+
+
+What r Server Side State Mgt Techniques?
+1) Session
+2) Application
+
+1)Session: on the server created for every user
+
+User visits your application every user is allocated a session by the server.
+
+Session stores------ Date & time of visit start
+		     SessionID
+		     Date & time of the visit end	
+
+		Timeout period----- 20min
+
+
+Mode------- 
+Default Mode--- 1)In Proc---- in the same process where the application thread is running
+	Session Work----Job------ it will become very difficult for the application thread to manage the working of the request as well as working with the session data.
+
+Session working to some one else---- it either a different server which will take of session management or same server but different process will take care of it.
+
+				
+2)
+SQL Server-------
+1)open web.config
+2) <sessionState mode="SQLServer" sqlConnectionString="server=yourDBServerName;Integrated Security=true"
+timeout="20" cookieless="false">
+3) open the developer command prompt----admin mode
+	aspnet_regsql -S SPD -E -ssadd -sstype t
+
+1) tempdb--- t
+2) aspstate----p
+3) custom---- c  
+3)Your own database----
+
+----------------------------------------------------------------------
+		3) Out Proc------- 
+			-------State Server------------responsible for managing session data.
+		a) State Server ---- same laptop/server machine as the application is working
+				only the port number on which that service is running is required by 				the appplication server
+
+		b) State Server------ dedicated server for serving the purpose of session data
+		that server ip address is required by the application server to forward the work of session handling.
+
+
+Steps:
+
+1)Open Web.config
+and make the mode to State Server
+2)add  state connection string attribute 
+3) start the server--
+Open services.msc--- asp.net state service-----start-----
+-------------------------------------------------------------------------------
+			-------Custom
+		3) Off
+
+-----------------------------------------------------
+Event Sequnece in Global.asax--- application level events
+
+Application_Start
+		Session_Start
+			SessionID Start_date start_time Timeout
+		*********
+		Session_Error
+
+		**********		
+		Session_End
+			end_date end_time Timeout
+		***********
+		
+		
+Application_End
+
+---------------------------------------------------------
+
+		      	
+
+
