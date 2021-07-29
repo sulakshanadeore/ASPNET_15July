@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  
+  
+  <siteMapNode url="" title="Home"  description="This will take u to the home page">
+    <siteMapNode url="~/Services.aspx" title="Our Services"  description="List of Services we provide">
+      <siteMapNode description="AccountOpening" title="Accounts">
+        <siteMapNode url="~/SavingAccountOpening.aspx" description="Open Account" title="Saving Account">
+            </siteMapNode>
+        <siteMapNode url="~/CurrentAccountOpening.aspx" description="Open Account" title="Current Account">
+      </siteMapNode>
+      </siteMapNode>
+      <siteMapNode title="Loans" description="All types loans available">
+        <siteMapNode description="PersonalLoan" title="Personal" url="~/PersonalLoan.aspx"/>
+        <siteMapNode description="CarLoan" title="Car Loans" url="~/CarLoan.aspx"/>
+        
+        
+      </siteMapNode>
+    </siteMapNode>
+    
+    
+    
+    <siteMapNode url="~/Login.aspx" title="Login"  description="Login here" />
+    <siteMapNode url="~/SignUp.aspx" title="Register Here"  description="Registration for the app" />
+    
+  </siteMapNode>
+</siteMap>
