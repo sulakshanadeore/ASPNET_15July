@@ -1,0 +1,21 @@
+﻿@model FirstMVCApp.Models.ElectronicsProducts
+@{
+    ViewBag.Title = "UpdateProduct";
+}
+
+<h2>UpdateProduct</h2>
+
+<form method="post">
+    <label for="prodid">Enter Productid</label>
+    <input type="number" name="ProdId" value=@Model.ProdId />
+    <br />
+    <label for="ProdName">Enter ProdName</label>
+    <input type="text" name="ProdName" value=@Model.ProdName />
+    <br />
+    <label for="Price">Enter Price</label>
+    <input type="number" name="Price" value=@Model.Price />
+    <br />
+    <input type="submit" name="UpdateProduct" value="Update Product" />
+        
+</form>
+

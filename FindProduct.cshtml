@@ -1,0 +1,23 @@
+﻿@model FirstMVCApp.Models.ElectronicsProducts
+@{
+    ViewBag.Title = "FindProduct";
+}
+
+<h2>FindProduct</h2>
+<form>
+    <label for="prodid">Enter Productid</label>
+    <input type="number" name="ProdId" value=@Model.ProdId readonly="readonly" />
+    <br />
+    <label for="ProdName">Enter ProdName</label>
+    <input type="text" name="ProdName" value=@Model.ProdName readonly="readonly" />
+    <br />
+    <label for="Price">Enter Price</label>
+    <input type="number" name="Price" value=@Model.Price readonly="readonly" />
+    <br />
+    @*<input type="submit" name="" value="Insert New Product" />*@
+    @Html.ActionLink("Edit", "UpdateProduct", new { id = Model.ProdId })
+    <br />
+    @Html.ActionLink("Back", "Index")
+
+</form>
+
