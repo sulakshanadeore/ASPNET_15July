@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FirstMVCApp.Models.ElectronicsProducts>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<table class="table-striped" style="background-color:springgreen">
+    <tr>
+        <td>Product ID</td>
+        <td>Product Name </td>
+        <td>Product Price</td>
+    </tr>
+
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProdId</td>
+            <td>@item.ProdName</td>
+            <td>@item.Price</td>
+
+        </tr>
+    }
+
+</table>
+<hr/>
+@*<a></a>*@
+@Html.ActionLink("Click here to add  more products","AddProduct")
