@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "AcceptData";
+}
+
+<h2>AcceptData</h2>
+<form method="post">
+    <fieldset>
+        <legend>Employee Data</legend>
+        <label for="Empid">Enter EmployeeID</label>
+        <input type="number" name="Empid" value="" />
+        <br />
+         <label for="empname">Enter Employee Name</label>
+        <input type="text" name="Empname" value="" />
+        <br />
+        <label for="city">Enter City</label>
+        <input type="text" name="City" value="" />
+        <br />
+        <input type="submit" name="AcceptData" value="Accept & Validate" />
+    </fieldset>
+</form>
+<p>
+    @Html.ValidationSummary()
+</p>
