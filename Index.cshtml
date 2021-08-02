@@ -1,28 +1,12 @@
-﻿@using PassingData.Models;
+﻿
+@{
+    ViewBag.Title = "Index";
+}
 
-<h1>@ViewBag.title</h1>
-<h2>@ViewBag.usercnt</h2>
-<br />
-<hr />
-<h1>Most valued Employee </h1>
-@ViewBag.oldestEmp.Empid
-@ViewBag.oldestEmp.Ename
-
-<hr />
-<ol>
-    @foreach (var item in ViewBag.mygreetings)
-    {
-        <li>@item</li>
-    }
-</ol>
-<br />
-<hr />
-<ul>
-
-    @foreach (Employee item in ViewBag.employees)
-    {
-        <li>@item.Empid | @item.Ename</li>
+<h2>Index</h2>
+<h1></h1>
+<hr/>
+<label>Welcome</label><h3>@Session["loggedInUser"]</h3>
 
 
-    }
-</ul>
+<h1>@ViewBag.userid</h1>
