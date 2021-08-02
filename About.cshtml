@@ -1,0 +1,25 @@
+﻿@using PassingData.Models;
+<h1>@ViewData["PageTitle"]</h1>
+<h1>@ViewData["usercount"]</h1>
+<br/>
+<hr/>
+<form method="post">
+    <label>Enter Empid</label>
+    <input type="number" name="eid" value="" />
+    <input type="submit" name="About" value="Pass Empid from About to Contact" />
+</form>
+<hr/>
+<ol>
+    @foreach (Employee item in (IEnumerable<Employee>)ViewData["employees"])
+    {
+        <li>@item.Empid  | @item.Ename</li>
+    }
+</ol>
+<br/>
+<hr/>
+<ol>
+    @foreach (var item in (IEnumerable<string>)ViewData["greetings"])
+    {
+        <li>@item</li>
+    }
+</ol>
