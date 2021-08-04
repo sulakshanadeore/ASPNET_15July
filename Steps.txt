@@ -1,0 +1,37 @@
+﻿1)create api project---- create api controller
+and do all the coding of api
+
+2) create one more project ---- mvc project-----
+Add a mvc controller--- employeeGenral
+create views
+copy and paste the model code
+
+3) set project dependencies using solution explorer, right click solution
+--->project dependencies and mvc project depends on api project
+4)Right click solution----set startup projects---- right click solution-->
+set startup projects----Multiple start up projects---set web api first and the mvc app--- set action to start for both projects
+
+5) Install Http Client--->Tools menu--Nuget Package Manager---->
+Microsoft.AspNet.WebApi.Client--->Install it
+
+6)write code
+
+7) Install Microsoft.AspNet.Cors and 
+   Install Microsoft.AspNet.WebApi.Cors
+CORS ---- Cross Origin Resource Sharing
+
+
+8)Open Web Api Controller
+On class level:[EnableCors(origins: "*", headers: "*", methods: "*")]
+On method level:[EnableCors(origins: "*", headers: "*", methods: "*")]
+
+
+
+9)In class WebAPI Config---- webapi demo -------
+Register()
+{
+ config.EnableCors();
+}
+
+
+
