@@ -1,0 +1,15 @@
+﻿@page
+@model FirstRazorPagesDemo.Pages.AllBooksModel
+@{
+    <h1>Books List</h1>
+      <ol type="I">
+
+
+        @foreach (var item in AllBooksModel.GetBooks)
+        {
+            <li>@item.BookId  |  @item.BookName | @item.Price.</li>
+
+        }
+    </ol>
+    <a href="/AddNewBook">Create New Book</a>
+}

@@ -1,0 +1,17 @@
+﻿@page
+@model FirstRazorPagesDemo.Pages.AddNewBookModel
+@{
+    <form method="post">
+        <label>Enter Bookid</label>
+        <input type="number" name="BookId" class="form-control" />
+        <br />
+        <label>Enter BookName</label>
+        <input type="text" name="BookName" class="form-control" />
+        <br />
+        <label>Enter Book Price</label>
+        <input type="number" name="Price" class="form-control" />
+        <br />
+        <input type="submit" value="Save" class="form-control" />
+    </form>
+    <a href="/AllBooks">Show Books List</a>
+}
