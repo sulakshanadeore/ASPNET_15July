@@ -1,0 +1,118 @@
+1) create category class with properties---- catid,catname,catdesc
+2) create interface with method that returns List<Category>
+public interface Icategory
+{
+	List<Category> getCategories();
+}
+Create Repository
+----------------
+class CategoryData:Icategory
+{
+	public	List<Category> getCategories()
+	{
+	List<categroy> catList=new List<category>();
+//	add itmes to the list
+return catList();
+	}
+
+}
+
+create obj of the class & call the method.
+Dependency on CategoryData----method is accessible--
+removed---- ur method is not accessible
+
+Eliminate this dependency------ Dependency Injection
+WebAPI----
+Models----- Create calss category
+create interface
+
+Class CategoryData-----
+
+  methods in the class give u services----- configruationServices
+
+services means methods----- injected into the place whereever we need it
+How to inject?
+
+
+
+3) Implement Interface in Class and implement the method
+-------------------------------------------------------------------------------------------
+4)We need to add the namespace, i.e., Microsoft.Extension.DependencyInjection.
+So, in the startup class, inside the ConfigureServices method, we need to add our dependency into the service collection which will dynamically inject whenever and wherever we want in the project. Also, we can mention which kind of instance we want to inject - the lifetime of our instance.
+1) Transient
+It creates an instance each time they are requested and are never shared. It is used mainly for lightweight stateless services.
+2)Singleton
+This creates only single instances which are shared among all components that require it.
+3)Scoped
+It creates an instance once per scope which is created on every request to the application.
+
+------------------------------------------------------------------------------------
+
+
+
+	using Microsoft.AspNetCore.Builder;  
+	using Microsoft.AspNetCore.Hosting;  
+ 	using Microsoft.Extensions.Configuration;  
+	using Microsoft.Extensions.DependencyInjection;  
+	  
+	namespace DIinCore  
+	{  
+	    public class Startup  
+	    {  
+	        public Startup(IConfiguration configuration)  
+11.	        {  
+12.	            Configuration = configuration;  
+13.	        }  
+14.	  
+15.	        public IConfiguration Configuration { get; }  
+16.	  
+17.	        public void ConfigureServices(IServiceCollection services)  
+18.	        {  
+	            //services.AddTransient<interfacename, RepositoryName>();  
+	  
+	            services.AddSingleton<ICategoryRepository, CategoryRepository>();  
+	  
+	            //services.AddScoped<ICategoryRepository, CategoryRepository>();  
+	  
+	            services.AddMvc();  
+26.	        }  
+27.	  
+28.	        public void Configure(IApplicationBuilder app, IHostingEnvironment env)  
+29.	        {  
+30.	            if (env.IsDevelopment())  
+31.	            {  
+32.	                app.UseDeveloperExceptionPage();  
+33.	            }  
+34.	  
+	            app.UseMvc();  
+36.	        }  
+37.	    }  
+38.	}  
+
+
+So far, we have added our dependency to the collection. Now, it’s time to inject where we need it, i.e., in the Web API. Our GET method is inside the CategoryController and we want an instance of categoryrepository. So, let’s create a constructor of CategoryController which expects the type of ICategoryRepository. From this parameterized constructor, set the private property of type ICategoryRepository which will be used to call GetCategories from the GET method.
+	using Microsoft.AspNetCore.Mvc;  
+	using System.Collections.Generic;  
+	using System.Threading.Tasks;  
+	  
+	namespace DIinCore.Controllers  
+	{  
+	    [Route("api/Category")]  
+8.	    public class CategoryController : Controller  
+9.	    {  
+10.	        private ICategoryRepository categoryRepository { get; set; }  
+	        public CategoryController(ICategoryRepository categoryRepository)  
+	        {  
+	            this.categoryRepository = categoryRepository;  
+14.	        }  
+15.	  
+	        [HttpGet]  
+	        public async Task<IActionResult> Get()  
+	        {  
+	            List<Category> categories = categoryRepository.GetCategories();  
+	            return Ok(categories);  
+21.	        }  
+22.	    }  
+23.	}  
+
+Run the application and we will be able to see the result of the GET method of CategoryController. Now, even though we haven’t created an instance of CategoryRepository which is expected by CategoryController, we are able to call the GET method successfully. The instance of CategoryRepository has been resolved dynamically, i.e., our Dependency Injection.
