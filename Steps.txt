@@ -1,0 +1,66 @@
+ADO.NET 
+-------
+
+provider model for connecting and working with databases.
+1) SQL SERVER-----------SqlClient
+using System.Data.SqlClient;
+using System.Data;
+
+GAC-----
+
+2) ORACLE---
+3) ODBC--
+4) OLEDB---
+*****************************************************************
+
+DBServer----------->Application Server--------->client(User)
+Tables/			IIS
+Views/		MVC/Web Forms/Razor/MVC core
+SP/
+Triggers/
+Functions/
+Synonyms/
+etc
+-------------------------------------------------------------------
+Class Library----
+Connected Architecture
+
+1) Create Connection---- SqlConnection
+2) Create Command-------SqlCommand
+3)Open the  Connection------ cn.Open()
+3) Execute Command------- ExecuteReader()==select
+			  ExecuteQuery()====I/U/D
+4)List/Object
+5) Close the connection
+6) Dispose the connection
+-------------------------------------------------------------
+
+Steps---- 
+1)  Create  MVC App
+MVC App depends on NWDAL
+MVC App depends on NWBLL
+
+2)Class Lib--- NWDAL
+3) Class Lib---- NWBLL/NWBAL
+NWDAL depends on NWBLL
+
+4) Build BLL
+5) Build DAL
+Add reference of BLL into DAL
+Add Reference of DAL into MVC
+6) Add reference of DAL & BLL into MVC
+
+
+----------------------
+7)create Inline function
+CREATE FUNCTION [dbo].ShowCategories
+()
+RETURNS TABLE AS RETURN
+(
+	SELECT * from Categories
+)
+
+
+4) 
+
+
