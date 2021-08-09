@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -30,7 +30,11 @@ namespace DatabaseConnect_DisconnectedDemo.Controllers
         // GET: Regions/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            RegionBAL bal=dal.FindRegion(id);
+            M_Regions regions = new M_Regions();
+            regions.RegionID = bal.RegionID;
+            regions.RegionName = bal.RegionName;
+            return View(regions);
         }
 
         // GET: Regions/Create
@@ -41,15 +45,18 @@ namespace DatabaseConnect_DisconnectedDemo.Controllers
 
         // POST: Regions/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(M_Regions collection)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                RegionBAL bal = new RegionBAL();
+                bal.RegionID = collection.RegionID;
+                bal.RegionName = collection.RegionName;
+                dal.InsertRegion(bal);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -58,20 +65,28 @@ namespace DatabaseConnect_DisconnectedDemo.Controllers
         // GET: Regions/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+
+            RegionBAL bal = dal.FindRegion(id);
+            M_Regions regions = new M_Regions();
+            regions.RegionID = bal.RegionID;
+            regions.RegionName = bal.RegionName;
+            return View(regions);
         }
 
         // POST: Regions/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, M_Regions collection)
         {
             try
             {
                 // TODO: Add update logic here
-
+                RegionBAL bal = new RegionBAL();
+                bal.RegionID = id;
+                bal.RegionName = collection.RegionName;
+                dal.UpdateRegion(bal);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -80,17 +95,22 @@ namespace DatabaseConnect_DisconnectedDemo.Controllers
         // GET: Regions/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            RegionBAL bal = dal.FindRegion(id);
+            M_Regions regions = new M_Regions();
+            regions.RegionID = bal.RegionID;
+            regions.RegionName = bal.RegionName;
+            return View(regions);
         }
 
         // POST: Regions/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, M_Regions collection)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                dal.DeleteRegion(id);
                 return RedirectToAction("Index");
             }
             catch
