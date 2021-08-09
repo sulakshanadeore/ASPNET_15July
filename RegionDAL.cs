@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,7 +11,8 @@ namespace DAL
 {
     public class RegionDAL
     {
-        static DataSet ds = new DataSet();
+         DataSet ds = new DataSet();
+        SqlDataAdapter adapter;
         public List<RegionBAL> ShowRegions()
         {
             FillData();
@@ -29,23 +30,71 @@ namespace DAL
 
         }
 
-        private static void FillData()
+        private  void FillData()
         {
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["NwCnString"].ConnectionString);
-            SqlDataAdapter adapter = new SqlDataAdapter("select * from region", cn);
-            
+            adapter= new SqlDataAdapter("select * from region", cn);
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
             adapter.Fill(ds,"regions");
         }
 
         public void InsertRegion(RegionBAL data)
-        { }
-        public void DeleteRegion(int regionid)
-        { }
-        public void UpdateRegion(RegionBAL regionid)
-        { }
+        {
+            FillData();
+            DataRow drow = ds.Tables["regions"].NewRow();
+            drow[0] = Convert.ToInt32(data.RegionID);
+            drow["RegionDescription"] = data.RegionName.ToString();
+            ds.Tables["regions"].Rows.Add(drow);
+            SaveToDB();
 
-        //public RegionBAL FindRegion(int regionid)
-        //{ }
+        }
+
+        private void SaveToDB()
+        {
+            SqlCommandBuilder bldr = new SqlCommandBuilder(adapter);
+            adapter.Update(ds.Tables["regions"]);
+        }
+
+        public void DeleteRegion(int regionid)
+        {
+            FillData();
+            DataRow found=ds.Tables["regions"].Rows.Find(regionid);
+            found.Delete();
+            //SqlCommandBuilder bldr = new SqlCommandBuilder(adapter);
+            //adapter.Update(ds.Tables["regions"]);
+            SaveToDB();
+
+
+        }
+        public void UpdateRegion(RegionBAL region)
+        {
+
+            FillData();
+
+            DataRow found = ds.Tables["regions"].Rows.Find(region.RegionID);
+
+            found["RegionDescription"] = region.RegionName;
+            //SqlCommandBuilder bldr = new SqlCommandBuilder(adapter);
+            //adapter.Update(ds.Tables["regions"]);
+            SaveToDB();
+            
+
+
+
+        }
+
+        public RegionBAL FindRegion(int regionid)
+        {
+            FillData();
+
+            DataRow found = ds.Tables["regions"].Rows.Find(regionid);
+            
+            RegionBAL bal = new RegionBAL();
+            bal.RegionID = regionid;
+            bal.RegionName = found["RegionDescription"].ToString();
+            return bal;
+
+        }
 
 
     }
