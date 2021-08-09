@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +10,11 @@ namespace DatabaseConnectivityDemo_Connected.Controllers
 {
     public class CategoriesController : Controller
     {
+        CategoriesDAL dal = new CategoriesDAL();
         // GET: Categories
         public ActionResult Index()
         {
-            CategoriesDAL dal = new CategoriesDAL();
+            
             List<Category> categories=dal.GetCategories();
             List<M_Category> mlist = new List<M_Category>();
             foreach (var item in categories)
@@ -33,26 +34,37 @@ namespace DatabaseConnectivityDemo_Connected.Controllers
         // GET: Categories/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Category data=dal.FindDetails(id);
+            M_Category c = new M_Category();
+            c.CatID = data.CatId;
+            c.CatName = data.CatName;
+            c.CatDesc = data.Desc;
+            return View(c);
         }
 
         // GET: Categories/Create
         public ActionResult Create()
         {
+
             return View();
         }
 
         // POST: Categories/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(M_Category c)
         {
             try
             {
                 // TODO: Add insert logic here
+                Category c1 = new Category();
+                c1.CatId = 0;
+                c1.CatName = c.CatName;
+                c1.Desc = c.CatDesc;
+                dal.InsertCategory(c1);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -61,20 +73,31 @@ namespace DatabaseConnectivityDemo_Connected.Controllers
         // GET: Categories/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+
+            Category data = dal.FindDetails(id);
+            M_Category c = new M_Category();
+            c.CatID = data.CatId;
+            c.CatName = data.CatName;
+            c.CatDesc = data.Desc;
+            return View(c);
         }
 
         // POST: Categories/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, M_Category collection)
         {
             try
             {
                 // TODO: Add update logic here
+                Category c = new Category();
+                c.CatId = id;
+                c.CatName = collection.CatName;
+                c.Desc = collection.CatDesc;
+                dal.UpdateCategory(c);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -83,17 +106,22 @@ namespace DatabaseConnectivityDemo_Connected.Controllers
         // GET: Categories/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Category data = dal.FindDetails(id);
+            M_Category c = new M_Category();
+            c.CatID = data.CatId;
+            c.CatName = data.CatName;
+            c.CatDesc = data.Desc;
+            return View(c);
         }
 
         // POST: Categories/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, M_Category c)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                dal.DeleteCategory(id);
                 return RedirectToAction("Index");
             }
             catch
