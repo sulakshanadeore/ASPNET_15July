@@ -1,0 +1,56 @@
+Steps
+-----
+1) Create a web app--- web forms
+2) at button click
+ SqlConnection cn = new SqlConnection(cnstring);
+            SqlDataAdapter da = new SqlDataAdapter("select * from products", cn);
+            DataSet ds = new DataSet();//cache 
+            da.Fill(ds, "p1");
+3)
+public class Products
+    {
+        public int Prodid { get; set; }
+        public string ProdName { get; set; }
+        public decimal Price { get; set; }
+    }
+
+var query = (from d in ds.Tables["p1"].AsEnumerable()
+                  where d.Field<int>("CategoryID") == Convert.ToInt32(TextBox1.Text)
+                        select d).ToList();
+
+            foreach (var item in query)
+           {
+                plist.Add(
+                    new Products
+                    {
+                        Prodid = item.Field<int>("ProductID"),
+                        ProdName = item.Field<string>("ProductName"),
+                        Price = item.Field<decimal>("UnitPrice")
+                    });
+
+
+           }
+
+		GridView1.DataSource = plist;
+            GridView1.DataBind();
+
+
+4) var query = from d in ds.Tables["p1"].AsEnumerable()
+                        where d.Field<int>("CategoryID") == Convert.ToInt32(TextBox1.Text)
+                        select new 
+                        { pid = d.Field<int>("ProductID"),
+                            pname = d.Field<string>("ProductName") };
+
+            List<Products> plist = new List<Products>();
+            foreach (var item in query)
+            {
+                plist.Add(new Products { Prodid=item.pid,ProdName=item.pname});
+            }
+		GridView1.DataSource = plist;
+            GridView1.DataBind();
+
+
+
+
+
+

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace LINQDemo
+namespace LINQToDataSetsDemo
 {
-  public  class Products
+    public class Products
     {
-        public string ProductName { get; set; }
-        public int Price { get; set; }
+        public int Prodid { get; set; }
+        public string ProdName { get; set; }
+        public decimal Price { get; set; }
     }
 }
