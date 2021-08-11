@@ -1,0 +1,78 @@
+﻿Code First Approach
+
+1) Class Library,Console App & Web app-- MVC
+   Install EF
+
+2) In the Class Library
+   Add Reference System.ComponentModel.DataAnnotations
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+  A) create (Entity) Classes as per the requirement-
+---------------------------------------------------------------
+	The Classes will contain only properties
+ Each Property will have a Attribute given to it:
+	1) Required
+	2) Key
+	3) Column-- Order,Datatype etc
+	4) Foreignkey
+	5) Table
+	6) NotMapped
+        7) Display
+	8) Scaffold
+	9) MinLength
+	10) MaxLength
+	11)DataType
+
+  public class Employee
+ {
+
+ }
+
+
+Table will be created as "Employees"
+	
+	B) Context Class Creation
+--------------------------------------------------------
+	1) Specify connectionString in App.config
+	<connectionStrings>
+    <add connectionString="server=spd\sqlexpress;initial catalog=TrialDB;Integrated Security=true" name="TrialDBcnString" providerName="System.Data.SqlClient"/>
+  </connectionStrings>	
+
+	2)Create class TrialDBContext-- 
+if the dtabase name required is TrialDB, the class name must be TrialDBContext
+	using System.Data.Entity;
+
+	public class TrialDBContext:DbContext
+	{
+      public TrialDB():base("TrialDBcnString")
+	{
+		 Database.SetInitializer<SchoolContext>(new DropCreateDatabaseAlways<SchoolContext>());
+
+            //Database.SetInitializer<SchoolContext>(new DropCreateDatabaseIfModelChanges<SchoolContext>());
+
+            
+
+            //Database.SetInitializer<SchoolContext>(null);
+	}
+
+	}
+
+Build the Class library
+********************************************************************************
+
+
+2) Go to console app
+	reference the library
+	app.config-- paste cnstring
+	Program.cs
+		{
+
+Write Code
+	}
+
+3) Go to MVC app
+	reference the library
+
+Manually code for Controllers & View etc.
