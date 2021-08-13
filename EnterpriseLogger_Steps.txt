@@ -1,0 +1,297 @@
+Logging Exception and Information
+
+
+understand how to implement “Logging Exceptions & Information” using “EnterpriseLibrary” components.
+
+Libraries Used:
+
+               1.       Enterprise Library.5.0.505
+
+               2.       CommonServiceLocater.1.3
+
+               3.       Unity.3.5
+
+               4.       Unity.Interception.2.1
+
+Step 1:
+
+“EnterpriseLibrary.5.0.505” need to be used to log exceptions & information.
+
+ Below are the “EnterpriseLibrary.5.0.505” components used to implement logging and exception handling.
+
+                1.       Microsoft.Practices.EnterpriseLibrary.Common.dll
+
+                2.       Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll
+
+                3.       Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll
+
+                4.       Microsoft.Practices.EnterpriseLibrary.Logging.dll
+
+Step 2:
+
+ “Microsoft.Practices.Unity.3.5” libraries need to be added for object instantiation and maintenance.
+
+                1.       Microsoft.Practices.Unity.Configuration.dll
+
+                2.       Microsoft.Practices.Unity.dll
+
+                3.       Microsoft.Practices.Unity.RegistrationByConvention.dll 
+
+Step 3:
+
+Below mentioned “Unity.Interception.2.1” is a dependency assembly to use “Microsoft.Practices.Unity.3.5”
+
+                1.       Microsoft.Practices.Unity.Interception.Configuration.dll
+
+                2.       Microsoft.Practices.Unity.Interception.dll
+
+Step 4:
+
+Add below mentioned “CommonServiceLocator.1.3” assembly.
+
+                1.       Microsoft.Practices.ServiceLocation.dll
+
+Step 5: Logging Configuration File
+
+Below mentioned the config sections should present inside the “App.config” (or) extended config file.
+
+Here mentioned the extended configuration file from App.config file.
+
+File Name: LoggingConfiguration.config
+
+<configuration>
+
+       <configSections>
+
+              <section name="loggingConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.LoggingSettings, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" requirePermission="true" />
+
+              <section name="exceptionHandling" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Configuration.ExceptionHandlingSettings, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" requirePermission="true" />
+
+       </configSections>
+
+ 
+
+       <loggingConfiguration name="" tracingEnabled="true" defaultCategory="LoggingCategory">
+
+              <listeners>
+
+                     <add name="EventLogListener" type="Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners.FormattedEventLogTraceListener, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                       listenerDataType="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.FormattedEventLogTraceListenerData, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                       source="My Current Application" formatter="Text Formatter" log="" machineName="."
+
+                       traceOutputOptions="None" filter="Error" />
+
+             
+
+                     <add name="RollingFlatFileTraceListener" type="Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners.RollingFlatFileTraceListener, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                       listenerDataType="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.RollingFlatFileTraceListenerData, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                       fileName="ExceptionLog.log" formatter="Text Formatter"
+
+                        rollSizeKB="4000" maxArchivedFiles="100" filter="Error" />
+
+             
+
+                     <add name="FlatFileTraceListener" type="Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners.RollingFlatFileTraceListener, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                       listenerDataType="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.RollingFlatFileTraceListenerData, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                       fileName="InformationLog.log" formatter="Text Formatter"
+
+                       rollSizeKB="4000" maxArchivedFiles="100" filter="Information" />
+
+              </listeners>
+
+              <formatters>
+
+                     <add type="Microsoft.Practices.EnterpriseLibrary.Logging.Formatters.TextFormatter, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                       template="Timestamp: {timestamp}{newline}&#xA;Message: {message}{newline}&#xA;Category: {category}{newline}&#xA;Priority: {priority}{newline}&#xA;EventId: {eventid}{newline}&#xA;Severity: {severity}{newline}&#xA;Title:{title}{newline}&#xA;Machine: {localMachine}{newline}&#xA;App Domain: {localAppDomain}{newline}&#xA;ProcessId: {localProcessId}{newline}&#xA;Process Name: {localProcessName}{newline}&#xA;Thread Name: {threadName}{newline}&#xA;Win32 ThreadId:{win32ThreadId}{newline}&#xA;Extended Properties: {dictionary({key} - {value}{newline})}"
+
+                       name="Text Formatter" />
+
+              </formatters>
+
+             
+
+              <categorySources>
+
+                     <add switchValue="Error" name="ExceptionCategory">
+
+                            <listeners>
+
+                                  <add name="RollingFlatFileTraceListener" />
+
+                                  <add name="EventLogListener" />
+
+                           </listeners>
+
+                     </add>
+
+                     <add switchValue="Information" name="LogInformation">
+
+                           <listeners>
+
+                                  <add name="FlatFileTraceListener" />
+
+                           </listeners>
+
+                     </add>
+
+              </categorySources>
+
+             
+
+              <specialSources>
+
+                     <allEvents switchValue="All" name="AllEvents" />
+
+                     <notProcessed switchValue="All" name="UnprocessedCategory" />
+
+                     <errors switchValue="All" name="LoggingErrors &amp; Warnings">
+
+                           <listeners>
+
+                                  <add name="EventLogListener" />
+
+                           </listeners>
+
+                     </errors>
+
+              </specialSources>
+
+       </loggingConfiguration>
+
+ 
+
+       <!-- Exception Handling -->
+
+       <exceptionHandling>
+
+              <exceptionPolicies>
+
+                     <add name="ExceptionHandlingPolicy">
+
+                           <exceptionTypes>
+
+                                  <add name="All Exceptions" type="System.Exception, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="NotifyRethrow">
+
+                                         <exceptionHandlers>
+
+                                                <add name="ExceptionHandlingHandler" logCategory="ExceptionCategory" eventId="100" severity="Error" title="Enterprise Library Exception Handling"
+
+                                                 type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.LoggingExceptionHandler, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+                                                        formatterType="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.TextExceptionFormatter, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" priority="0" />
+
+                                         </exceptionHandlers>
+
+                                  </add>
+
+                           </exceptionTypes>
+
+                     </add>
+
+              </exceptionPolicies>
+
+       </exceptionHandling>
+
+</configuration>
+
+File Name: App.config
+
+In the “App.config”, need to give reference to extended configuration as mentioned below.
+
+       <configSections>
+
+              <section name="enterpriseLibrary.ConfigurationSource" type="Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ConfigurationSourceSection, Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" requirePermission="true" />
+
+       </configSections>
+
+ 
+
+       <enterpriseLibrary.ConfigurationSource selectedSource="FilebasedConfigurationSource">
+
+              <sources>
+
+                     <add name="FilebasedConfigurationSource"
+
+                            type="Microsoft.Practices.EnterpriseLibrary.Common.Configuration.FileConfigurationSource, Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" filePath="LoggingConfiguration.config" />
+
+              </sources>
+
+       </enterpriseLibrary.ConfigurationSource>
+
+ 
+
+Step 6: Create Method for logging
+
+Logging.cs
+
+namespace App.Logging
+
+{
+
+    public class Logging
+
+    {
+
+        public static void Exception(Exception ex)
+
+        {
+
+            EnterpriseLibraryContainer.Current.GetInstance<ExceptionManager>().HandleException(ex, "ExceptionHandlingPolicy");
+
+        }
+
+ 
+
+        public static void Information(string information)
+
+        {
+
+            var infoLog = new LogEntry();
+
+            infoLog.EventId = 2;
+
+            infoLog.Message = information;
+
+            infoLog.Priority = 2;
+
+            infoLog.Severity = System.Diagnostics.TraceEventType.Information;
+
+            infoLog.TimeStamp = DateTime.Now;
+
+            infoLog.ProcessName = "MyApplication";
+
+ 
+
+            Logger.Write(infoLog, "LogInformation");
+
+        }
+
+    }
+
+}
+
+Step 6: Consume methods to log information and exception
+
+Logging.Information("Tested Successfully");
+
+ 
+
+var ex = new Exception("Created exception");
+
+            Logging.Exception(ex);
+
+ 
+
+Step 7: Log information path.
+
+The log will be written in the path given in configuration file.
+
+ 
+
