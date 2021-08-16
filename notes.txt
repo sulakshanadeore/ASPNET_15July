@@ -1,0 +1,157 @@
+WCF/Indigo
+----
+Windows Communication Foudation
+.NET framework 3.0
+
+Communication Purpose between client and server.
+
+Prior to WCF
+-------------
+1) Remoting--- tcpip
+2) Web Services---- http
+3) WCF---- all protocols including http/https/tcpip/udp/etc
+
+It is a framework for building,
+configuring,
+deploying 
+			network distributed services.
+
+
+		Create a service----- class---- used for distribution purpose
+	
+Wide range of protocols: tcp/http/https/udp etc--- wide variety of networks
+								-----------
+
+**Interoper-ability in a services
+	WCF -----.NET,JAVA and other programming application.
+
+3 parts/components
+1) WCF Service
+2) Host for the service
+3) Client of  the service
+
+
+1) create app
+2) host the app
+3) clients of the app
+One app can use one or multiple services.
+App is a client of the service.
+
+Amazon App---- 
+NEFT Banking
+UPI id service
+
+
+Fundamentals of WCF
+1)Message--
+communication unit that comprises of several parts,
+sender,receiver,body(actual msg) it is used by client & server.
+
+2)Endpoint---sender or reciever address is called as endpoint.
+
+
+Server				Client
+
+Endpoint	<---	Msg<----
+		-----> Msg------->Endpoint
+3)Address
+http://localhost1345/Service1----- URL
+http://localhost1345/Service1/OpenMail------URI
+
+http/tcp/udp/net----- protocol/scheme
+localhost---- domain/name of the machine in the network/web domain
+Service1-----path
+OpenMail---- actual method or page that is the output from the server.
+
+4)Binding ----- mode of binding between  client and server
+Mode of communication
+5)Contract------Will be interface--- which will be implemented by the class.
+Expose only the required methods to  a particular type of client by implementing only specific methods.
+We achieve SOA(Service Oriented Architecture).
+VI Store
+========
+List of Services---- Interface---
+
+interface IListofServices
+{
+void Pack199();
+void Pack299();
+void PAck249();
+
+
+}
+
+service
+Class GoldCustomer:IListofServices
+{
+void Pack199()
+{
+cw("this is not your choice");
+
+}
+void Pack299()
+{
+cw("U will get A,B,C & D services");
+}
+void PAck249()
+{
+cw("this is not your choice");
+}
+
+}
+
+http://localhost:32423/GoldCustomer/Pack299<---
+
+It is a collection of methods/operations which will be exposed to the client.
+OpenMail
+CreateMessage
+AddNumbers
+SubtractNumbers
+
+
+6)Hosting
+Self-Hosting
+IIS Hosting
+WAS(Windows Activation Service) hosting
+
+7)Metadata
+data about data--
+your service can be used by the client.
+documentation 
+
+8)Client----app
+
+9)Channel-----internet/network
+
+
+10)SOAP---simple object access protocol--- it is xml based document which has the message.
+
+-------------------------------------------------------------------------------------------
+Advantages
+1)Interoperability
+2)Secured than web services
+3) Can be used with variety of protocols.
+
+--------------------------------------
+ABC of WCF
+			Client				Server
+-----------------------------------------------------------------------------
+A--Address		client address			server address
+B--Binding		http:localhost:1234		http:localhost:1234/
+			tcpip:localhost:6784		tcpip:localhost:6784/
+			udpXXXXXXX
+C--Contract              IList                            IList
+----------------------------------------------------------------------------------					
+
+	
+
+
+
+
+
+
+
+
+
+WPF
+----
