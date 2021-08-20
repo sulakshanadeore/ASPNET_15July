@@ -11,8 +11,10 @@ namespace CachingDemo
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           // Label1.Text = DateTime.Now.ToLongDateString();
+            // Label1.Text = DateTime.Now.ToLongDateString();
             Label1.Text = DateTime.Now.ToLongTimeString();
+            Response.Write("Hello");
+
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
